@@ -12,17 +12,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/comp.css') }}">
 </head>
 <body>
-	<header>
-		<h1>Welcome to .....</h1>
-	</header>
-	<section>
-		<form class="join-chat">
-			<label>Type your email to join the chat</label>
-			<input name="email" type="email">
-			<input type="submit" value="Join">
-		</form>
-
-	    <div class="messages" style="display:none">
+	    <div class="messages">
 	        <div class="message">
 	          <div class="avatar"></div>
 	          <div class="content">
@@ -30,20 +20,16 @@
 	          </div>
 	        </div>
 		</div>
+	
+		<div id="input">
+			<textarea name="" id="chat-message" cols="30" rows="10"></textarea>
+		</div>
 
-		<form class="compose-message-form" style="display:none;">
-			<textarea name="message" required></textarea>
-			<input type="submit" value="send">
-		</form>
-
-		
-	</section>
-	<footer>
-	</footer>
-
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-	<script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.js') }} "></script>
+<script src="{{ url_for('static', filename='js/kibo.js') }} "></script>
+<script src="{{ url_for('static', filename='js/socket.io.min.js') }} "></script>
+<script src="{{ url_for('static', filename='js/codemirror.js') }} "></script>
+<script src="{{ url_for('static', filename='js/mode/markdown/markdown.js') }} "></script>
+<script src="{{ url_for('static', filename='js/main.js') }} "></script>
 </body>
 </html>

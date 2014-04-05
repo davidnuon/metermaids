@@ -1,8 +1,10 @@
 // Message Manager
 var mm = {
+	name: '',
+
 	last: 0,
 	messages : [], 
-	addMessage : function (name, pic, content) {
+	addMessage : function (pic, name, content) {
 		this.messages[this.messages.length] = {
 			'name' : name,
 			'pic' : pic,
@@ -11,12 +13,13 @@ var mm = {
 	},
 	append : function () {
 		// Message Window
-		var mw = $('#messages');
+		var mw = $('.messages');
 		for(var i = this.last; i < this.messages.length; i++) {
 			var msg = this.messages[i];
 			mw.append(
-				'<div class="message"><div class="avatar"></div><div class="content">$m</div></div>'
+				'<div class="message"><div class="avatar"></div><div class="content"><strong>$n</strong>$m</div></div>'
 				.replace('$m',msg.content)
+				.replace('$n',msg.name)
 			)
 		}
 		this.last = this.messages.length;		
@@ -25,9 +28,45 @@ var mm = {
 }
 
 
+var chatAPI = {
+
+		connect : function(done) {
+
+			var that = this;
+
+			this.socket = io.connect('/chat');
+			this.socket.on('connect', done);
+
+			this.socket.on('message', function(message){
+				if(that.onMessage){
+					that.onMessage(message);
+				}
+			});
+		},
+
+		join : function(email, onJoin){
+			this.socket.emit('join', email, onJoin);
+		},
+
+		sendMessage : function(message, onSent) {
+			this.socket.emit('message', message, onSent);
+		}
+
+	};	
+
 $( function () {
+	mm.name = prompt('', 'Enter your name', '');
+	chatAPI.connect(function(){});
+
 	var km = new Kibo();
 	var $chatInput = $('#chat-message');
+
+	chatAPI.join(mm.name, function(joined, name){
+				if(joined){
+					$(".compose-message-form").show();
+					$(".messages").show();
+				}
+	});
 
 	// Keyboard stuff
 	km
@@ -36,19 +75,39 @@ $( function () {
 	})
 	.up(['enter'], function() {
 		var text = $chatInput.val();
+		
 		if(text.length > 2) {
-			mm.addMessage(
-			'test',  // Image
-			'test',  // Name
-			$chatInput.val());  // Message Content
-			mm.append();
-		} 
+
+			chatAPI.sendMessage(text, function(sent,message){
+			if(sent){
+
+				mm.addMessage(
+				'test',  // Image
+				mm.name,  // Name
+				text)  // Message Content
+				console.log(text);
+				mm.append();
+
+			}
+		});
 
 		$chatInput.val('');
+		} 	
 	})
+	// end kibo
+
+	chatAPI.onMessage = function(message){
+			mm.addMessage(
+				'test',  // Image
+				message.sender,  // Name
+				message.content)  // Message Content
+			mm.append();
+
+	};
 
 
-	  var editor = CodeMirror.fromTextArea($chatInput[0], {
-	    mode: "text/x-markdown"
-	  });
+
+	  // var editor = CodeMirror.fromTextArea($chatInput[0], {
+	  //   mode: "text/x-markdown"
+	  // });
 })
