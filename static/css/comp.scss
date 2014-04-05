@@ -15,11 +15,11 @@ body {
 }
 #messages {
 	top:0;
-	left:200px;
-	right:200px;
+	left:0;
+	right:0;
 	bottom:100px;
-	background:#ddd;
-	padding:10px;
+	background:#fff;
+	padding:0;
 	overflow-x:auto;
 
 	.message {
@@ -27,15 +27,16 @@ body {
 		height: auto;
 		position: relative;
 		margin-bottom: 10px;
+		border-bottom:1px solid #ccc;
 		
 		.avatar, .content {
 			position: absolute;
 		}
 
 		.avatar {
-			width: 80px;
-			height: 80px;
-			background:red;
+			width: 60px;
+			height: 60px;
+			background:#aaa;
 			top:0;
 			left:0;
 		}
@@ -45,7 +46,7 @@ body {
 			top:0;
 			padding:10px;
 			right:0;
-			left:80px;
+			left:60px;
 		}
 	}
 }

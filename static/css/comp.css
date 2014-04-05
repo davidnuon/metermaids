@@ -12,23 +12,24 @@ body {
 
 #messages {
   top: 0;
-  left: 200px;
-  right: 200px;
+  left: 0;
+  right: 0;
   bottom: 100px;
-  background: #ddd;
-  padding: 10px;
+  background: #fff;
+  padding: 0;
   overflow-x: auto; }
   #messages .message {
     min-height: 80px;
     height: auto;
     position: relative;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc; }
     #messages .message .avatar, #messages .message .content {
       position: absolute; }
     #messages .message .avatar {
-      width: 80px;
-      height: 80px;
-      background: red;
+      width: 60px;
+      height: 60px;
+      background: #aaa;
       top: 0;
       left: 0; }
     #messages .message .content {
@@ -36,7 +37,7 @@ body {
       top: 0;
       padding: 10px;
       right: 0;
-      left: 80px; }
+      left: 60px; }
 
 #input {
   bottom: 0;
