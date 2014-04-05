@@ -16,7 +16,8 @@ body {
   right: 200px;
   bottom: 100px;
   background: #ddd;
-  padding: 10px; }
+  padding: 10px;
+  overflow-x: auto; }
   #messages .message {
     min-height: 80px;
     height: auto;
