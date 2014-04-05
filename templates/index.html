@@ -9,6 +9,22 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/comp.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/codemirror.css') }}">
 </head>
+
+{% raw %}
+<script id="message-template" type="text/x-handlebars-template">
+	<div class="message">
+		<table>
+			<tr>
+				<td></td>
+				<td>{{ name }} &mdash; {{ message }}</td>
+			</tr>
+		</table>
+	</div>
+</script>
+
+{% endraw %}
+
+
 <body>
 	    <div class="messages">
 		</div>
@@ -23,6 +39,7 @@
 <script src="{{ url_for('static', filename='js/codemirror.js') }} "></script>
 <script src="{{ url_for('static', filename='js/Markdown.Converter.js') }} "></script>
 <script src="{{ url_for('static', filename='js/mode/markdown/markdown.js') }} "></script>
+<script src="{{ url_for('static', filename='js/handlebars-v1.3.0.js.js') }} "></script>
 <script src="{{ url_for('static', filename='js/skulpt.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/skulpt-stdlib.js') }}"></script>
 

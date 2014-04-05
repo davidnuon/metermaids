@@ -27,15 +27,19 @@ var mm = {
 		if(this.conv == null) {
 			this.conv =  new Markdown.Converter();
 		}
+
+		var source   = $("#message-template").html();
+		var template = Handlebars.compile(source);
+
 		// Message Window
 		var mw = $('.messages');
 		for(var i = this.last; i < this.messages.length; i++) {
 			var msg = this.messages[i];
 			mw.append(
-				'<div class="message">\
-					<table><tr><td></td><td>$n&mdash;$m</td></tr></table>\ </div>'
-				.replace('$m', this.conv.makeHtml(msg.content) )
-				.replace('$n',msg.name)
+				template({
+					'name' : msg.name,
+					'content' : this.conv.makeHtml(msg.content 
+				})
 			)
 		}
 		this.last = this.messages.length;		
@@ -71,6 +75,7 @@ var chatAPI = {
 	};	
 
 $( function () {
+
 	$(document).on( 'click', 'pre', function(){
 		var codeBlock = $($(this).find('code')[0]);
 		var outputBlock = $($(this).find('output')[0]);
