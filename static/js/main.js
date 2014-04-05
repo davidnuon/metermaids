@@ -66,7 +66,6 @@ var chatAPI = {
 		},
 
 		join : function(email, cr, onJoin){
-			alert('joining');
 			this.socket.emit('join', email, cr, onJoin);
 		},
 
