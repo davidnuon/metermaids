@@ -5,46 +5,47 @@ body, html {
   width: 100%; }
 
 body {
-  background: #ddd;
   font-family: sans-serif; }
 
-header, footer {
-  position: absolute;
-  z-index: 2000; }
+#messages, #input {
+  position: absolute; }
 
-header {
-  background: #fff;
-  width: 400px;
-  right: 26px;
-  bottom: 40px;
-  height: 35px; }
-  header input[type=text] {
-    background: #fff;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding: 3px 10px;
-    color: #444; }
-  header #popup {
-    width: 420px;
-    height: 100%;
-    position: absolute;
-    top: -95px;
-    border: 1px solid #ddd; }
-  header #popup ul {
-    margin: 0;
-    padding: 0; }
-  header #popup ul li {
-    list-style: none;
-    padding: 10px 20px;
-    background: #fff;
-    height: 30px; }
+#messages {
+  top: 0;
+  left: 200px;
+  right: 200px;
+  bottom: 100px;
+  background: #ddd;
+  padding: 10px; }
+  #messages .message {
+    min-height: 80px;
+    height: auto;
+    position: relative;
+    margin-bottom: 10px; }
+    #messages .message .avatar, #messages .message .content {
+      position: absolute; }
+    #messages .message .avatar {
+      width: 80px;
+      height: 80px;
+      background: red;
+      top: 0;
+      left: 0; }
+    #messages .message .content {
+      background: #fff;
+      top: 0;
+      padding: 10px;
+      right: 0;
+      left: 80px; }
 
-footer {
-  display: none;
+#input {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  height: 35px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px -1px 2px; }
+  height: 100px;
+  background: blue; }
+  #input #chat-message {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0; }

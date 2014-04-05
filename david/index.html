@@ -9,67 +9,37 @@
     </style>
 
 	<link rel="stylesheet" href="css/comp.css">
-
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoL7MM2glT_LZ-bgAR6swhe7p3L15gH2A&amp;sensor=true">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
   </head>
   <body>
-  	<header>
-      <input type="text" placeholder="Search for a conversation..." id="convs">
+  	   
+    <div id="messages">
+        <div class="message">
+          <div class="avatar"></div>
+          <div class="content">
+            `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, ducimus, expedita, blanditiis iure debitis dolorem fugit eius earum fuga et eligendi laboriosam quidem ullam officia dolores veniam nam at eaque.
+          </div>
+        </div>
 
-      <div id="popup">
-        <ul>
-        </ul>
-      </div>
-    </header>
-  	<footer></footer>
-    <div id="map-canvas"/>
-  
+        <div class="message them">
+          <div class="avatar"></div>
+          <div class="content">\
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, similique, temporibus, accusamus dolorem dolorum animi assumenda maxime ab blanditiis labore error quis. Voluptate eos architecto voluptas facere laboriosam doloribus asperiores.
+          </div>
+        </div>
+    </div>
+
+    <div id="input">
+      <textarea 
+        name="" 
+        id="chat-message" 
+        cols="30"
+         rows="10"
+         placeholder="Enter your message here."></textarea>
+
+    </div>
+
   <script src="js/jquery.js"></script>
   <script src="js/kibo.js"></script>
-  <script>
-    $(function () {
-      var searchBox = new Kibo(
-          $("#convs")[0]
-      )
-      .up(['any letter', 'any number'], function() {
-        var $list_item  =  $("#popup ul");
-        $list_item.append('<li>test</li>');
-        adjustBar();
-      })
-      .down(['ctrl a'], function() {})
-      .up(['backspace'], function() {})
-
-      ;
-
-      var adjustBar = function () {
-          var $list_item  = $("#popup ul");
-          var currentTop = $list_item.height();
-        
-
-          var newTop = -currentTop - 20;
-
-
-          $('#popup').css('top', newTop + 'px')
-      }
-
-      $("#convs").focus();
-
-       adjustBar();
-    });
-
-  </script>
+  <script src="js/main.js"></script>
   </body>
 </html>
