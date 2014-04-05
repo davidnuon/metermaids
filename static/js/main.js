@@ -1,7 +1,12 @@
 window.yolo = function() {
     var blocks = $('code').toArray();
     var prog = blocks.map(function(e, n) {
-        return e.innerHTML;
+        text = e.innerHTML;
+        if (text.indexOf("//js") != -1) {
+            return e.innerHTML;
+        } else {
+            return '';
+        }
     }).join("\n");
 
     eval(prog.replace('yolo()', ''));
