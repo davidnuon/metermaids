@@ -38,7 +38,7 @@ var mm = {
 			mw.append(
 				template({
 					'name' : msg.name,
-					'content' : this.conv.makeHtml(msg.content 
+					'content' : this.conv.makeHtml(msg.content)
 				})
 			)
 		}
@@ -84,6 +84,7 @@ $( function () {
 		function outf(text) { 
 			var outputBlock = me.childNodes[1];
 			outputBlock.innerHTML += text;
+			$(outputBlock).show();
 			//console.log(outputBlock);
 			//outputBlock.html( outputBlock.html() + text); 
 		} 
@@ -95,9 +96,10 @@ $( function () {
 		}
  
 		function runit() { 
+		   var outputBlock = me.childNodes[1];
 		   var prog = codeBlock.html(); 
 		  
-		   outputBlock.html('');
+		   outputBlock.innerHTML = '';
 		   
 		   Sk.configure({output:outf, read:builtinRead}); 
 		   eval(Sk.importMainWithBody("<stdin>",false,prog));
@@ -105,7 +107,7 @@ $( function () {
 
 		runit();
 
-
+		$(this).onclick(function() {});
 	} );
 
   var $chatInput = $('#chat-message');

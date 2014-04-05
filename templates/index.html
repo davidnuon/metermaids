@@ -16,7 +16,7 @@
 		<table>
 			<tr>
 				<td></td>
-				<td>{{ name }} &mdash; {{ message }}</td>
+				<td>{{ name }} &mdash; {{{ content }}}</td>
 			</tr>
 		</table>
 	</div>
@@ -39,9 +39,10 @@
 <script src="{{ url_for('static', filename='js/codemirror.js') }} "></script>
 <script src="{{ url_for('static', filename='js/Markdown.Converter.js') }} "></script>
 <script src="{{ url_for('static', filename='js/mode/markdown/markdown.js') }} "></script>
-<script src="{{ url_for('static', filename='js/handlebars-v1.3.0.js.js') }} "></script>
+<script src="{{ url_for('static', filename='js/handlebars-v1.3.0.js') }} "></script>
 <script src="{{ url_for('static', filename='js/skulpt.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/skulpt-stdlib.js') }}"></script>
+<script src="{{ url_for('static', filename='js/rainbow-custom.min.js') }}"></script>
 
 
 <script src="{{ url_for('static', filename='js/main.js') }} "></script>
