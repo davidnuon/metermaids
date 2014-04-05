@@ -146,7 +146,11 @@ $(function() {
 
     editor.setSize('100%', '100px');
 
-    if (username === '') {
+    if (
+        username === '' ||
+        username.length < 2 ||
+        username === 'None'
+    ) {
         newname = prompt('', 'Enter your name', '');
         document.cookie = "username=" + newname;
         username = newname;
