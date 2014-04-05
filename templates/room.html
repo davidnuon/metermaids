@@ -7,16 +7,23 @@
 	<title>shsh</title>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/codemirror.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/comp.css') }}">
 </head>
 
 {% raw %}
+
+
 <script id="message-template" type="text/x-handlebars-template">
-<div class="message">
-	<span class="sender">
-		{{ name }}
-	</span>
-	<div class="content">
+<div class="message panel panel-default">
+  <div class="panel-heading">
+  		{{ name }}
+  		</div>
+
+
+	<div class="panel-body">
+		<div class="content">
 		{{{ content }}}
+	</div>
 	</div>
 </div>
 </script>
