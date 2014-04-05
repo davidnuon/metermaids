@@ -12,18 +12,10 @@
 
 {% raw %}
 <script id="message-template" type="text/x-handlebars-template">
-	<div class="message">
-		<table>
-			<tr>
-				<td style="vertical-align:top">
-					<img style="margin: 0 auto; display:block;" src="http://dummyimage.com/70x70/aaaaaa/fff" />
-					<p><strong>{{ name }} </strong></p>
-				</td>
-				<td style="vertical-align:top">
-				 {{{ content }}}</td>
-			</tr>
-		</table>
-	</div>
+<div class="message">
+	<p><strong>{{ name }} </strong></p>
+	{{{ content }}}
+</div>
 </script>
 
 {% endraw %}

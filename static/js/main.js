@@ -104,7 +104,7 @@ $( function () {
 		   Sk.configure({output:outf, read:builtinRead}); 
 		   eval(Sk.importMainWithBody("<stdin>",false,prog));
 		} 
-
+		
 		runit();
 
 		$(this).onclick(function() {});
@@ -115,6 +115,8 @@ $( function () {
   var editor = CodeMirror.fromTextArea($chatInput[0], {
     mode: "text/x-markdown"
   });
+
+  editor.setSize('100%', '100px');
 
 
 	mm.name = makeid(5); //prompt('', 'Enter your name', '');
