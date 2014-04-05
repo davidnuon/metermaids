@@ -25,7 +25,13 @@ class ChatNamespace(BaseNamespace):
     def rec_dissconnect(self):
         self.log("Client dissconected")
 
+    def on_join(self, name):
+        self.log('%s joined chat' % name)
+        return True, name
 
+    def on_message(self, message):
+        self.log('got a message: %s' % message)
+        return True, message
 @app.route("/", methods=['GET'])
 def index():
     return render_template('index.html')
@@ -37,3 +43,5 @@ def socketio(remaining):
     except:
         app.logger.error('Exception while handling socketio connection', exc_info=True)
     return Response
+
+
