@@ -7,7 +7,7 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
     </style>
-	
+
 	<link rel="stylesheet" href="css/comp.css">
 
     <script type="text/javascript"
@@ -26,8 +26,50 @@
     </script>
   </head>
   <body>
-  	<header></header>
+  	<header>
+      <input type="text" placeholder="Search for a conversation..." id="convs">
+
+      <div id="popup">
+        <ul>
+        </ul>
+      </div>
+    </header>
   	<footer></footer>
     <div id="map-canvas"/>
+  
+  <script src="js/jquery.js"></script>
+  <script src="js/kibo.js"></script>
+  <script>
+    $(function () {
+      var searchBox = new Kibo(
+          $("#convs")[0]
+      )
+      .up(['any letter', 'any number'], function() {
+        var $list_item  =  $("#popup ul");
+        $list_item.append('<li>test</li>');
+        adjustBar();
+      })
+      .down(['ctrl a'], function() {})
+      .up(['backspace'], function() {})
+
+      ;
+
+      var adjustBar = function () {
+          var $list_item  = $("#popup ul");
+          var currentTop = $list_item.height();
+        
+
+          var newTop = -currentTop - 20;
+
+
+          $('#popup').css('top', newTop + 'px')
+      }
+
+      $("#convs").focus();
+
+       adjustBar();
+    });
+
+  </script>
   </body>
 </html>
