@@ -90,6 +90,14 @@ var chatAPI = {
 
 $(function() {
 
+    $('.content').each(function(e, n) {
+        conv = new Markdown.Converter();
+        $(n).html(
+            conv.makeHtml($(n).html())
+        )
+
+    })
+
     $(document).on('click', 'pre', function() {
         var codeBlock = $($(this).find('code')[0]);
         var outputBlock = $($(this).find('output')[0]);
