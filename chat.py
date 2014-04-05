@@ -1,21 +1,21 @@
 from gevent import monkey
-from flask import Flask, Response, render_template, request, redirect
+from flask import Flask, Response, render_template, request, redirect, url_for
 from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
-from socketio.mixins import BroadcastMixin
+from socketio.mixins import RoomsMixin
 import uuid
+
 
 monkey.patch_all()
 app = Flask(__name__)
 app.debug = True
 app.config['PORT'] = 5000
-
-
-class RoomForm(Form):
-    room_name = TextField('room_name', validators=[DataRequired()])
-
-
-class ChatNamespace(BaseNamespace, BroadcastMixin):
+def generate_room():
+    room = uuid.uuid4()
+    return str(room)
+room = generate_room()
+chatroom = '/chat/' + room
+class ChatNamespace(BaseNamespace, RoomsMixin):
     def initialize(self):
         self.logger = app.logger
         self.log("Socketio session started")
@@ -24,36 +24,33 @@ class ChatNamespace(BaseNamespace, BroadcastMixin):
         self.logger.info("[{0}] {1}".format(self.socket.sessid, message))
 
     def recv_connect(self):
+        self.join(chatroom)
         self.log("New connection")
 
     def recv_disconnect(self):
+        self.leave(chatroom)
         self.log("Client disconnected")
 
-    def on_join(self, email):
-        self.log("%s joined chat" % email)
-        self.session['email'] = email
-        return True, email
 
-    def on_message(self, message):
-        self.log('got a message: %s' % message)
-        self.broadcast_event_not_me("message",{ "sender" : self.session["email"], "content" : message})
-        return True, message
+
+
 
 
 
 @app.route('/', methods=['GET'])
 def landing():
-    namespaces = {uuid.uuid4: ChatNamespace}
     return redirect(url_for('room'))
 
 @app.route('/socket.io/<path:remaining>')
 def socketio(remaining):
     try:
-        socketio_manage(request.environ, namespaces, request)
+        socketio_manage(request.environ, {chatroom: ChatNamespace} , request)
     except:
         app.logger.error("Exception while handling socketio connection",
                          exc_info=True)
     return Response()
-@app.route('/room/<uuid>')
-def room():
 
+
+@app.route('/room/' + room)
+def room():
+    return render_template('room.html')
