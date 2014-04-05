@@ -13,8 +13,7 @@ app.config['PORT'] = 5000
 def generate_room():
     room = uuid.uuid4()
     return str(room)
-room = generate_room()
-chatroom = '/chat/' + room
+
 class ChatNamespace(BaseNamespace, RoomsMixin):
     def initialize(self):
         self.logger = app.logger
@@ -31,15 +30,23 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
         self.leave(chatroom)
         self.log("Client disconnected")
 
+    def on_message(self, msg):
+        self.log('got a message: %s ' % msg)
+        print dir(msg)
+        self.emit_to_room(chatroom, 'message', {
+            'content' : msg,
+            'sender' : self.session['name']
+            })
+        return True, msg
 
-
-
-
-
+    def on_join(self, email):
+        self.session['name'] = email
+        self.log('%s joins' % email)
+        return True, email
 
 @app.route('/', methods=['GET'])
 def landing():
-    return redirect(url_for('room'))
+    return redirect(url_for('chatroom_route'))
 
 @app.route('/socket.io/<path:remaining>')
 def socketio(remaining):
@@ -50,7 +57,6 @@ def socketio(remaining):
                          exc_info=True)
     return Response()
 
-
 @app.route('/room/' + room)
-def room():
-    return render_template('room.html')
+def chatroom_route():
+    return render_template('room.html', chatroom = room)

@@ -54,11 +54,12 @@ var chatAPI = {
 
 			var that = this;
 
-			this.socket = io.connect('/chat');
+			this.socket = io.connect('/chat/' + chatroom);
 			this.socket.on('connect', done);
 
 			this.socket.on('message', function(message){
 				if(that.onMessage){
+					console.log(message);
 					that.onMessage(message);
 				}
 			});
