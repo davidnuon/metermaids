@@ -120,7 +120,7 @@ $( function () {
   editor.setSize('100%', '100px');
 
 
-	mm.name = makeid(5); //prompt('', 'Enter your name', '');
+	mm.name = username; //prompt('', 'Enter your name', '');
 	chatAPI.connect(function(e){
 		console.log(e);
 	});
