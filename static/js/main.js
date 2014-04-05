@@ -71,6 +71,38 @@ var chatAPI = {
 	};	
 
 $( function () {
+	$(document).on( 'click', 'pre', function(){
+		var codeBlock = $($(this).find('code')[0]);
+		var outputBlock = $($(this).find('output')[0]);
+		var me = this; 
+
+		function outf(text) { 
+			var outputBlock = me.childNodes[1];
+			outputBlock.innerHTML += text;
+			//console.log(outputBlock);
+			//outputBlock.html( outputBlock.html() + text); 
+		} 
+
+		function builtinRead(x) {
+		    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+		            throw "File not found: '" + x + "'";
+		    return Sk.builtinFiles["files"][x];
+		}
+ 
+		function runit() { 
+		   var prog = codeBlock.html(); 
+		  
+		   outputBlock.html('');
+		   
+		   Sk.configure({output:outf, read:builtinRead}); 
+		   eval(Sk.importMainWithBody("<stdin>",false,prog));
+		} 
+
+		runit();
+
+
+	} );
+
   var $chatInput = $('#chat-message');
 
   var editor = CodeMirror.fromTextArea($chatInput[0], {
@@ -124,7 +156,6 @@ $( function () {
 				message.sender,  // Name
 				message.content)  // Message Content
 			mm.append();
-
 	};
 
 })
