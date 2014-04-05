@@ -104,7 +104,7 @@ $( function () {
 		   Sk.configure({output:outf, read:builtinRead}); 
 		   eval(Sk.importMainWithBody("<stdin>",false,prog));
 		} 
-		
+
 		runit();
 
 		$(this).onclick(function() {});
@@ -148,13 +148,11 @@ $( function () {
 				'test',  // Image
 				mm.name,  // Name
 				text)  // Message Content
-				console.log(text);
 				mm.append();
-
+				editor.setValue('');
 			}
 		});
 
-		$chatInput.val('');
 		} 	
 	})
 	// end kibo
