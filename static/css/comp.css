@@ -10,7 +10,7 @@ body {
 #messages, #input {
   position: absolute; }
 
-#messages {
+.messages {
   top: 0;
   left: 0;
   right: 0;
@@ -19,22 +19,22 @@ body {
   padding: 0;
   border-bottom: 1px solid #ccc;
   overflow-x: auto; }
-  #messages .message {
+  .messages .message {
     min-height: 60px;
     height: auto;
     position: relative;
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     background: #fff; }
-    #messages .message .avatar, #messages .message .content {
+    .messages .message .avatar, .messages .message .content {
       position: absolute; }
-    #messages .message .avatar {
+    .messages .message .avatar {
       width: 60px;
       height: 60px;
       background: #aaa;
       top: 0;
       left: 0; }
-    #messages .message .content {
+    .messages .message .content {
       background: #fff;
       top: 0;
       padding: 10px;

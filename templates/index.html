@@ -8,6 +8,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="cache-control" content="no-cache" />
 	<title>shsh</title>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/comp.css') }}">
 </head>
 <body>
 	<header>
@@ -20,8 +22,14 @@
 			<input type="submit" value="Join">
 		</form>
 
-		<ul class="messages" style="display:none;">
-		</ul>
+	    <div class="messages" style="display:none">
+	        <div class="message">
+	          <div class="avatar"></div>
+	          <div class="content">
+	            `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, ducimus, expedita, blanditiis iure debitis dolorem fugit eius earum fuga et eligendi laboriosam quidem ullam officia dolores veniam nam at eaque.
+	          </div>
+	        </div>
+		</div>
 
 		<form class="compose-message-form" style="display:none;">
 			<textarea name="message" required></textarea>
