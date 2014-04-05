@@ -164,36 +164,43 @@ $(function() {
     var km = new Kibo();
 
     chatAPI.join(mm.name, chatroom, function(joined, name) {
-        console.log('weww ' + joined)
         if (joined) {
             $(".compose-message-form").show();
             $(".messages").show();
         }
     });
 
+    var send_msg = function() {
+
+        var text = editor.getValue();
+
+        if (text.length > 2) {
+
+            chatAPI.sendMessage(text, chatroom, function(sent, message) {
+                if (sent) {
+
+                    mm.addMessage(
+                        'test', // Image
+                        mm.name, // Name
+                        text) // Message Content
+                    mm.append();
+                    editor.setValue('');
+                }
+            });
+
+        }
+
+    }
+    $('#send-button').click(function() {
+        send_msg();
+    })
     // Keyboard stuff
     km
         .up(['any'], function(e) {
             $chatInput.focus();
         })
         .up(['ctrl enter'], function() {
-            var text = editor.getValue();
-
-            if (text.length > 2) {
-
-                chatAPI.sendMessage(text, chatroom, function(sent, message) {
-                    if (sent) {
-
-                        mm.addMessage(
-                            'test', // Image
-                            mm.name, // Name
-                            text) // Message Content
-                        mm.append();
-                        editor.setValue('');
-                    }
-                });
-
-            }
+            send_msg();
         })
     // end kibo
 

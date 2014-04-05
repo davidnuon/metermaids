@@ -19,7 +19,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 100px;
+  bottom: 140px;
   background: #ddd;
   padding: 0;
   border-bottom: 1px solid #ccc;
@@ -39,10 +39,10 @@ body {
       display: block; }
 
 #input {
-  bottom: 0;
+  bottom: 5px;
   left: 0;
   right: 0;
-  height: 100px;
+  height: 140px;
   background: #333; }
   #input #chat-message {
     width: 100%;
