@@ -54,7 +54,7 @@ var chatAPI = {
 
 			var that = this;
 
-			this.socket = io.connect('/chat/' + chatroom);
+			this.socket = io.connect('/chat/');
 			this.socket.on('connect', done);
 
 			this.socket.on('message', function(message){
@@ -65,12 +65,13 @@ var chatAPI = {
 			});
 		},
 
-		join : function(email, onJoin){
-			this.socket.emit('join', email, onJoin);
+		join : function(email, cr, onJoin){
+			alert('joining');
+			this.socket.emit('join', email, cr, onJoin);
 		},
 
-		sendMessage : function(message, onSent) {
-			this.socket.emit('message', message, onSent);
+		sendMessage : function(message, cr, onSent) {
+			this.socket.emit('message', message, cr, onSent);
 		}
 
 	};	
@@ -121,11 +122,14 @@ $( function () {
 
 
 	mm.name = makeid(5); //prompt('', 'Enter your name', '');
-	chatAPI.connect(function(){});
+	chatAPI.connect(function(e){
+		console.log(e);
+	});
 
 	var km = new Kibo();
 
-	chatAPI.join(mm.name, function(joined, name){
+	chatAPI.join(mm.name, chatroom, function(joined, name){
+		console.log('weww ' + joined)
 				if(joined){
 					$(".compose-message-form").show();
 					$(".messages").show();
@@ -142,7 +146,7 @@ $( function () {
 		
 		if(text.length > 2) {
 
-			chatAPI.sendMessage(text, function(sent,message){
+			chatAPI.sendMessage(text, chatroom, function(sent,message){
 			if(sent){
 
 				mm.addMessage(
@@ -163,7 +167,7 @@ $( function () {
 				'test',  // Image
 				message.sender,  // Name
 				message.content)  // Message Content
-			mm.append();
+			mm.append();	
 	};
 
 })
