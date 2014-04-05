@@ -1,3 +1,5 @@
+$min : 40px;
+
 body, html {
 	margin:0;
 	padding:0;
@@ -7,6 +9,7 @@ body, html {
 
 body {
 	font-family:sans-serif;
+	font-size:12px;
 }
 
 .messages, #input {
@@ -18,16 +21,15 @@ body {
 	left:0;
 	right:0;
 	bottom:100px;
-	background:red;
+	background:#ddd;
 	padding:0;
 	border-bottom:1px solid #ccc;
 	overflow-x:auto;
 
 	.message {
-		min-height: 60px;
+		min-height: $min;
 		height: auto;
 		position: relative;
-		margin-bottom: 10px;
 		border-bottom:1px solid #ccc;
 		background:#fff;
 		
@@ -36,8 +38,8 @@ body {
 		}
 
 		.avatar {
-			width: 60px;
-			height: 60px;
+			width: $min;
+			height: $min;
 			background:#aaa;
 			top:0;
 			left:0;
@@ -46,9 +48,9 @@ body {
 		.content {
 			background:#fff;
 			top:0;
-			padding:10px;
+			padding:4px;
 			right:0;
-			left:60px;
+			left:$min + 2px;
 		}
 	}
 }

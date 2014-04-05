@@ -1,3 +1,14 @@
+function makeid(k)
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < k; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 // Message Manager
 var mm = {
 	name: '',
@@ -17,7 +28,7 @@ var mm = {
 		for(var i = this.last; i < this.messages.length; i++) {
 			var msg = this.messages[i];
 			mw.append(
-				'<div class="message"><div class="avatar"></div><div class="content"><strong>$n</strong>$m</div></div>'
+				'<div class="message"><div class="avatar"></div><div class="content"><strong>$n</strong>&mdash;$m</div></div>'
 				.replace('$m',msg.content)
 				.replace('$n',msg.name)
 			)
@@ -55,7 +66,7 @@ var chatAPI = {
 	};	
 
 $( function () {
-	mm.name = prompt('', 'Enter your name', '');
+	mm.name = makeid(5); //prompt('', 'Enter your name', '');
 	chatAPI.connect(function(){});
 
 	var km = new Kibo();

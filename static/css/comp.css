@@ -5,7 +5,8 @@ body, html {
   width: 100%; }
 
 body {
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  font-size: 12px; }
 
 .messages, #input {
   position: absolute; }
@@ -15,31 +16,30 @@ body {
   left: 0;
   right: 0;
   bottom: 100px;
-  background: red;
+  background: #ddd;
   padding: 0;
   border-bottom: 1px solid #ccc;
   overflow-x: auto; }
   .messages .message {
-    min-height: 60px;
+    min-height: 40px;
     height: auto;
     position: relative;
-    margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     background: #fff; }
     .messages .message .avatar, .messages .message .content {
       position: absolute; }
     .messages .message .avatar {
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       background: #aaa;
       top: 0;
       left: 0; }
     .messages .message .content {
       background: #fff;
       top: 0;
-      padding: 10px;
+      padding: 4px;
       right: 0;
-      left: 60px; }
+      left: 42px; }
 
 #input {
   bottom: 0;
