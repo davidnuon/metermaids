@@ -1,5 +1,5 @@
 from gevent import monkey
-from flask import Flask, Response, render_template, request, redirect, url_for
+from flask import Flask, Response, render_template, request, redirect, url_for, make_response
 from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
 from socketio.mixins import RoomsMixin
@@ -49,8 +49,9 @@ def landing():
 @app.route('/getroom', methods=['GET'])
 def getroom():
     name = request.args.get('username')
-    return redirect('/room/%s?name=%s' % (generate_room(), name) )
-
+    resp = make_response(redirect('/room/%s?name=%s' % (generate_room(), name)))
+    resp.set_cookie('username', name)
+    return resp
 @app.route('/socket.io/<path:remaining>')
 def socketio(remaining):
     try:
@@ -62,5 +63,5 @@ def socketio(remaining):
 
 @app.route('/room/<Room>')
 def chatroom_route(Room):
-    name = request.args.get('name')
+    name = request.cookies.get('username')
     return render_template('room.html', chatroom = Room, user = name)
