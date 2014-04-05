@@ -3,12 +3,13 @@ from flask import Flask, Response, render_template, request, redirect, url_for, 
 from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
 from socketio.mixins import RoomsMixin
+import HTMLParser
 import uuid
 import dataset
+import json
 
-
-db = dataset.connect('sqlite:///test.db')
-table = db['user']
+db = dataset.connect('sqlite:///chat.db')
+history = db['chat']
 
 
 monkey.patch_all()
@@ -43,6 +44,13 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
             'content' : msg,
             'sender' : self.session['name']
         })
+
+        history.insert(
+            dict(chatroom = cr,
+            content = msg,
+            sender = self.session['name'])
+        )
+
         ChatNamespace.chatroom_history[cr].append(
 {
             'content' : msg,
@@ -61,12 +69,9 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
         return True, email
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def landing():
-    if request.method == 'GET':
-        return render_template('landing.html')
-    else:
-        table.insert(dict(name=request.form['name'], email=request.form['email']))
+    return render_template('landing.html')
 
 @app.route('/getroom', methods=['GET'])
 def getroom():
@@ -89,8 +94,21 @@ def chatroom_route(Room):
     if name == None:
         name = ''
 
-    chatroom_history = {name: message for message in Room}
-    return render_template('room.html', chatroom = Room, user = name)
+    chatlog = db.query("select * from chat where chatroom like '%s'" % Room)
+    __thechatlog = []    
+    for row in chatlog:
+        __thechatlog.append({
+            'name' : row['sender'],
+            'pic' : '',
+            'content': row['content'] 
+            })
+
+    aus = json.dumps(__thechatlog)
+    print aus.replace("&#34;", "'")    
+    return render_template('room.html', chatroom = Room, user = name, thechatlog = 
+
+            __thechatlog
+        )
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -11,15 +11,11 @@
 </head>
 
 {% raw %}
-
-
 <script id="message-template" type="text/x-handlebars-template">
 <div class="message panel panel-default">
   <div class="panel-heading">
   		{{ name }}
   		</div>
-
-
 	<div class="panel-body">
 		<div class="content">
 		{{{ content }}}
@@ -27,12 +23,25 @@
 	</div>
 </div>
 </script>
-
 {% endraw %}
 
 
 <body>
 	    <div class="messages">
+{% for user in thechatlog %}
+<div class="message panel panel-default">
+  <div class="panel-heading">
+  		{{ user.name }}
+  		</div>
+	<div class="panel-body">
+		<div class="content">
+		{{ user.content }}
+	</div>
+	</div>
+</div>
+{% endfor %}
+
+
 		</div>
 	
 		<div id="input">

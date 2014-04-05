@@ -28,7 +28,7 @@ var mm = {
     name: '',
     conv: null,
     last: 0,
-    messages: [],
+    messages: [] || history,
     addMessage: function(pic, name, content) {
         this.messages[this.messages.length] = {
             'name': name,
