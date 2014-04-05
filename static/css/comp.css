@@ -15,15 +15,17 @@ body {
   left: 0;
   right: 0;
   bottom: 100px;
-  background: #fff;
+  background: #ddd;
   padding: 0;
+  border-bottom: 1px solid #ccc;
   overflow-x: auto; }
   #messages .message {
-    min-height: 80px;
+    min-height: 60px;
     height: auto;
     position: relative;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ccc; }
+    border-bottom: 1px solid #ccc;
+    background: #fff; }
     #messages .message .avatar, #messages .message .content {
       position: absolute; }
     #messages .message .avatar {
