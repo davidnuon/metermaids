@@ -4,6 +4,12 @@ from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
 from socketio.mixins import RoomsMixin
 import uuid
+import dataset
+
+
+db = dataset.connect('sqlite:///test.db')
+table = db['user']
+
 
 monkey.patch_all()
 app = Flask(__name__)
@@ -37,7 +43,7 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
             'content' : msg,
             'sender' : self.session['name']
         })
-        ChatNamespace.chatroom_history[cr].append( 
+        ChatNamespace.chatroom_history[cr].append(
 {
             'content' : msg,
             'sender' : self.session['name']
@@ -55,9 +61,12 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
         return True, email
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def landing():
-    return render_template('landing.html')
+    if request.method == 'GET':
+        return render_template('landing.html')
+    else:
+        table.insert(dict(name=request.form['name'], email=request.form['email']))
 
 @app.route('/getroom', methods=['GET'])
 def getroom():
@@ -79,7 +88,7 @@ def chatroom_route(Room):
     name = request.cookies.get('username')
     if name == None:
         name = ''
-        
+
     chatroom_history = {name: message for message in Room}
     return render_template('room.html', chatroom = Room, user = name)
 
