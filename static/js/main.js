@@ -1,9 +1,22 @@
-function makeid(k)
-{
+window.yolo = function() {
+    var blocks = $('code').toArray();
+    var prog = blocks.map(function(e, n) {
+        text = e.innerHTML;
+        if (text.indexOf("//js") != -1) {
+            return e.innerHTML;
+        } else {
+            return '';
+        }
+    }).join("\n");
+
+    eval(prog.replace('yolo()', ''));
+}
+
+function makeid(k) {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < k; i++ )
+    for (var i = 0; i < k; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
@@ -12,161 +25,172 @@ function makeid(k)
 
 // Message Manager
 var mm = {
-	name: '',
-	conv: null,
-	last: 0,
-	messages : [], 
-	addMessage : function (pic, name, content) {
-		this.messages[this.messages.length] = {
-			'name' : name,
-			'pic' : pic,
-			'content' : content
-		}
-	},
-	append : function () {
-		if(this.conv == null) {
-			this.conv =  new Markdown.Converter();
-		}
+    name: '',
+    conv: null,
+    last: 0,
+    messages: [],
+    addMessage: function(pic, name, content) {
+        this.messages[this.messages.length] = {
+            'name': name,
+            'pic': pic,
+            'content': content
+        }
+    },
+    append: function() {
+        if (this.conv == null) {
+            this.conv = new Markdown.Converter();
+        }
 
-		var source   = $("#message-template").html();
-		var template = Handlebars.compile(source);
+        var source = $("#message-template").html();
+        var template = Handlebars.compile(source);
 
-		// Message Window
-		var mw = $('.messages');
-		for(var i = this.last; i < this.messages.length; i++) {
-			var msg = this.messages[i];
-			mw.append(
-				template({
-					'name' : msg.name,
-					'content' : this.conv.makeHtml(msg.content)
-				})
-			)
-		}
-		this.last = this.messages.length;		
-		mw.scrollTop(mw.prop("scrollHeight"));
-	}
+        // Message Window
+        var mw = $('.messages');
+        for (var i = this.last; i < this.messages.length; i++) {
+            var msg = this.messages[i];
+            mw.append(
+                template({
+                    'name': msg.name,
+                    'content': this.conv.makeHtml(msg.content)
+                })
+            )
+        }
+        this.last = this.messages.length;
+        mw.scrollTop(mw.prop("scrollHeight"));
+    }
 }
 
 
 var chatAPI = {
 
-		connect : function(done) {
+    connect: function(done) {
 
-			var that = this;
+        var that = this;
 
-			this.socket = io.connect('/chat/');
-			this.socket.on('connect', done);
+        this.socket = io.connect('/chat/');
+        this.socket.on('connect', done);
 
-			this.socket.on('message', function(message){
-				if(that.onMessage){
-					console.log(message);
-					that.onMessage(message);
-				}
-			});
-		},
+        this.socket.on('message', function(message) {
+            if (that.onMessage) {
+                console.log(message);
+                that.onMessage(message);
+            }
+        });
+    },
 
-		join : function(email, cr, onJoin){
-			this.socket.emit('join', email, cr, onJoin);
-		},
+    join: function(email, cr, onJoin) {
+        this.socket.emit('join', email, cr, onJoin);
+    },
 
-		sendMessage : function(message, cr, onSent) {
-			this.socket.emit('message', message, cr, onSent);
-		}
+    sendMessage: function(message, cr, onSent) {
+        this.socket.emit('message', message, cr, onSent);
+    }
 
-	};	
+};
 
-$( function () {
+$(function() {
 
-	$(document).on( 'click', 'pre', function(){
-		var codeBlock = $($(this).find('code')[0]);
-		var outputBlock = $($(this).find('output')[0]);
-		var me = this; 
+    $(document).on('click', 'pre', function() {
+        var codeBlock = $($(this).find('code')[0]);
+        var outputBlock = $($(this).find('output')[0]);
+        var me = this;
 
-		function outf(text) { 
-			var outputBlock = me.childNodes[1];
-			outputBlock.innerHTML += text;
-			$(outputBlock).show();
-			//console.log(outputBlock);
-			//outputBlock.html( outputBlock.html() + text); 
-		} 
+        function outf(text) {
+            var outputBlock = me.childNodes[1];
+            outputBlock.innerHTML += text;
+            $(outputBlock).show();
+            //console.log(outputBlock);
+            //outputBlock.html( outputBlock.html() + text); 
+        }
 
-		function builtinRead(x) {
-		    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
-		            throw "File not found: '" + x + "'";
-		    return Sk.builtinFiles["files"][x];
-		}
- 
-		function runit() { 
-		   var outputBlock = me.childNodes[1];
-		   var prog = codeBlock.html(); 
-		  
-		   outputBlock.innerHTML = '';
-		   
-		   Sk.configure({output:outf, read:builtinRead}); 
-		   eval(Sk.importMainWithBody("<stdin>",false,prog));
-		} 
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
 
-		runit();
+        function runit() {
+            var outputBlock = me.childNodes[1];
+            var prog = codeBlock.html();
 
-		$(this).onclick(function() {});
-	} );
+            outputBlock.innerHTML = '';
 
-  var $chatInput = $('#chat-message');
+            Sk.configure({
+                output: outf,
+                read: builtinRead
+            });
+            eval(Sk.importMainWithBody("<stdin>", false, prog));
+        }
 
-  var editor = CodeMirror.fromTextArea($chatInput[0], {
-    mode: "text/x-markdown"
-  });
+        lines = codeBlock.html().split('\n');
+        if (lines[0] === '//js') {
+            eval(lines.splice(1).join('\n'))
+        } else {
+            runit();
+        }
+    });
 
-  editor.setSize('100%', '100px');
+    var $chatInput = $('#chat-message');
 
+    var editor = CodeMirror.fromTextArea($chatInput[0], {
+        mode: "text/x-markdown"
+    });
 
-	mm.name = username; //prompt('', 'Enter your name', '');
-	chatAPI.connect(function(e){
-		console.log(e);
-	});
+    editor.setSize('100%', '100px');
 
-	var km = new Kibo();
+    if (username === '') {
+        newname = prompt('', 'Enter your name', '');
+        document.cookie = "username=" + newname;
+        username = newname;
+    }
 
-	chatAPI.join(mm.name, chatroom, function(joined, name){
-		console.log('weww ' + joined)
-				if(joined){
-					$(".compose-message-form").show();
-					$(".messages").show();
-				}
-	});
+    mm.name = username; //prompt('', 'Enter your name', '');
+    chatAPI.connect(function(e) {
+        console.log(e);
+    });
 
-	// Keyboard stuff
-	km
-	.up(['any'], function(e) {
-		$chatInput.focus();
-	})
-	.up(['ctrl enter'], function() {
-		var text = editor.getValue();
-		
-		if(text.length > 2) {
+    var km = new Kibo();
 
-			chatAPI.sendMessage(text, chatroom, function(sent,message){
-			if(sent){
+    chatAPI.join(mm.name, chatroom, function(joined, name) {
+        console.log('weww ' + joined)
+        if (joined) {
+            $(".compose-message-form").show();
+            $(".messages").show();
+        }
+    });
 
-				mm.addMessage(
-				'test',  // Image
-				mm.name,  // Name
-				text)  // Message Content
-				mm.append();
-				editor.setValue('');
-			}
-		});
+    // Keyboard stuff
+    km
+        .up(['any'], function(e) {
+            $chatInput.focus();
+        })
+        .up(['ctrl enter'], function() {
+            var text = editor.getValue();
 
-		} 	
-	})
-	// end kibo
+            if (text.length > 2) {
 
-	chatAPI.onMessage = function(message){
-			mm.addMessage(
-				'test',  // Image
-				message.sender,  // Name
-				message.content)  // Message Content
-			mm.append();	
-	};
+                chatAPI.sendMessage(text, chatroom, function(sent, message) {
+                    if (sent) {
+
+                        mm.addMessage(
+                            'test', // Image
+                            mm.name, // Name
+                            text) // Message Content
+                        mm.append();
+                        editor.setValue('');
+                    }
+                });
+
+            }
+        })
+    // end kibo
+
+    chatAPI.onMessage = function(message) {
+        mm.addMessage(
+            'test', // Image
+            message.sender, // Name
+            message.content) // Message Content
+        mm.append();
+    };
 
 })
