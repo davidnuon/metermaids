@@ -9,10 +9,11 @@ function makeid(k)
     return text;
 }
 
+
 // Message Manager
 var mm = {
 	name: '',
-
+	conv: null,
 	last: 0,
 	messages : [], 
 	addMessage : function (pic, name, content) {
@@ -23,13 +24,18 @@ var mm = {
 		}
 	},
 	append : function () {
+		if(this.conv == null) {
+			this.conv =  new Markdown.Converter();
+		}
 		// Message Window
 		var mw = $('.messages');
 		for(var i = this.last; i < this.messages.length; i++) {
 			var msg = this.messages[i];
 			mw.append(
-				'<div class="message"><div class="avatar"></div><div class="content"><strong>$n</strong>&mdash;$m</div></div>'
-				.replace('$m',msg.content)
+				'<div class="message">\
+					<table><tr><td></td><td>$n&mdash;$m</td></tr></table>\
+				</div>'
+				.replace('$m', this.conv.makeHtml(msg.content) )
 				.replace('$n',msg.name)
 			)
 		}
@@ -66,7 +72,7 @@ var chatAPI = {
 	};	
 
 $( function () {
-	var $chatInput = $('#chat-message');
+  var $chatInput = $('#chat-message');
 
   var editor = CodeMirror.fromTextArea($chatInput[0], {
     mode: "text/x-markdown"
