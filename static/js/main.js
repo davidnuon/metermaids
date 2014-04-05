@@ -66,11 +66,17 @@ var chatAPI = {
 	};	
 
 $( function () {
+	var $chatInput = $('#chat-message');
+
+  var editor = CodeMirror.fromTextArea($chatInput[0], {
+    mode: "text/x-markdown"
+  });
+
+
 	mm.name = makeid(5); //prompt('', 'Enter your name', '');
 	chatAPI.connect(function(){});
 
 	var km = new Kibo();
-	var $chatInput = $('#chat-message');
 
 	chatAPI.join(mm.name, function(joined, name){
 				if(joined){
@@ -84,8 +90,8 @@ $( function () {
 	.up(['any'], function(e) {
 		$chatInput.focus();
 	})
-	.up(['enter'], function() {
-		var text = $chatInput.val();
+	.up(['ctrl enter'], function() {
+		var text = editor.getValue();
 		
 		if(text.length > 2) {
 
@@ -116,9 +122,4 @@ $( function () {
 
 	};
 
-
-
-	  // var editor = CodeMirror.fromTextArea($chatInput[0], {
-	  //   mode: "text/x-markdown"
-	  // });
 })
