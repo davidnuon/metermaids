@@ -9,11 +9,15 @@ monkey.patch_all()
 app = Flask(__name__)
 app.debug = True
 app.config['PORT'] = 5000
+
 def generate_room():
     room = uuid.uuid4()
     return str(room)
 
+
 class ChatNamespace(BaseNamespace, RoomsMixin):
+    chatroom_history = {}
+
     def initialize(self):
         self.logger = app.logger
         self.log("Socketio session started")
@@ -33,14 +37,23 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
             'content' : msg,
             'sender' : self.session['name']
         })
+        ChatNamespace.chatroom_history[cr].append( 
+{
+            'content' : msg,
+            'sender' : self.session['name']
+        }
+        	)
+        print self.chatroom_history
         return True, msg
 
     def on_join(self, email, cr):
         print email, cr
         self.session['name'] = email
         self.join(cr)
+        ChatNamespace.chatroom_history[cr] = []
         self.log('%s joins' % email)
         return True, email
+
 
 @app.route('/', methods=['GET'])
 def landing():
@@ -64,6 +77,7 @@ def socketio(remaining):
 @app.route('/room/<Room>')
 def chatroom_route(Room):
     name = request.cookies.get('username')
+    chatroom_history = {name: message for message in Room}
     return render_template('room.html', chatroom = Room, user = name)
 
 @app.errorhandler(404)
