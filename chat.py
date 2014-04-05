@@ -37,3 +37,7 @@ def socketio(remaining):
     except:
         app.logger.error('Exception while handling socketio connection', exc_info=True)
     return Response
+
+def on_join(self, name):
+    self.log('%s joined chat' % name)
+    return True, name
