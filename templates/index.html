@@ -13,8 +13,12 @@
 {% raw %}
 <script id="message-template" type="text/x-handlebars-template">
 <div class="message">
-	<p><strong>{{ name }} </strong></p>
-	{{{ content }}}
+	<span class="sender">
+		{{ name }}
+	</span>
+	<div class="content">
+		{{{ content }}}
+	</div>
 </div>
 </script>
 

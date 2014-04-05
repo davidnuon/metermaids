@@ -36,28 +36,20 @@ body {
 		height: auto;
 		position: relative;
 		border-bottom:1px solid #ccc;
-		padding: 5px 10px;
 		background:#fff;
 		
-		.avatar, .content {
-			position: absolute;
-		}
-
-		.avatar {
-			width: $min;
-			height: $min;
-			background:#aaa;
-			top:0;
-			left:0;
-		}
 
 		.content {
-			background:#fff;
-			top:0;
-			padding:4px;
-			right:0;
-			left:$min + 2px;
+			padding: 4px 10px;
+
 		}
+		.sender {
+			background: #666;
+			color:#fff;
+			padding:5px 10px;
+			display: block;
+		}
+
 	}
 }
 
