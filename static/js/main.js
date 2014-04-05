@@ -20,6 +20,7 @@ var mm = {
 			)
 		}
 		this.last = this.messages.length;		
+		mw.scrollTop(mw.prop("scrollHeight"));
 	}
 }
 
@@ -27,6 +28,8 @@ var mm = {
 $( function () {
 	var km = new Kibo();
 	var $chatInput = $('#chat-message');
+
+	// Keyboard stuff
 	km
 	.up(['any'], function(e) {
 		$chatInput.focus();
@@ -44,4 +47,8 @@ $( function () {
 		$chatInput.val('');
 	})
 
+
+	  var editor = CodeMirror.fromTextArea($chatInput[0], {
+	    mode: "text/x-markdown"
+	  });
 })
