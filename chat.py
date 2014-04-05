@@ -44,7 +44,12 @@ class ChatNamespace(BaseNamespace, RoomsMixin):
 
 @app.route('/', methods=['GET'])
 def landing():
-    return redirect('/room/%s' % generate_room())
+    return render_template('landing.html')
+
+@app.route('/getroom', methods=['GET'])
+def getroom():
+    name = request.args.get('username')
+    return redirect('/room/%s?name=%s' % (generate_room(), name) )
 
 @app.route('/socket.io/<path:remaining>')
 def socketio(remaining):
@@ -57,4 +62,5 @@ def socketio(remaining):
 
 @app.route('/room/<Room>')
 def chatroom_route(Room):
-    return render_template('room.html', chatroom = Room)
+    name = request.args.get('name')
+    return render_template('room.html', chatroom = Room, user = name)
