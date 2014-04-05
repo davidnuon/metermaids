@@ -27,17 +27,20 @@ var mm = {
 $( function () {
 	var km = new Kibo();
 	var $chatInput = $('#chat-message');
-
 	km
 	.up(['any'], function(e) {
 		$chatInput.focus();
 	})
 	.up(['enter'], function() {
-		mm.addMessage(
+		var text = $chatInput.val();
+		if(text.length > 2) {
+			mm.addMessage(
 			'test',  // Image
 			'test',  // Name
 			$chatInput.val());  // Message Content
-		mm.append();
+			mm.append();
+		} 
+
 		$chatInput.val('');
 	})
 
