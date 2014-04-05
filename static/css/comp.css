@@ -33,7 +33,7 @@ body {
     .messages .message .content {
       padding: 4px 10px; }
     .messages .message .sender {
-      background: #666;
+      background: #aaa;
       color: #fff;
       padding: 5px 10px;
       display: block; }

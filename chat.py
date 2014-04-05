@@ -49,7 +49,7 @@ def landing():
 @app.route('/getroom', methods=['GET'])
 def getroom():
     name = request.args.get('username')
-    resp = make_response(redirect('/room/%s?name=%s' % (generate_room(), name)))
+    resp = make_response(redirect('/room/%s' % (generate_room())))
     resp.set_cookie('username', name)
     return resp
 @app.route('/socket.io/<path:remaining>')
