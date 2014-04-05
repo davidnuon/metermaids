@@ -65,3 +65,7 @@ def socketio(remaining):
 def chatroom_route(Room):
     name = request.cookies.get('username')
     return render_template('room.html', chatroom = Room, user = name)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
