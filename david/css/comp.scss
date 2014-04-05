@@ -1,0 +1,37 @@
+body, html {
+	margin:0;
+	padding:0;
+
+
+	height:100%;
+	width:100%;
+}
+
+body {
+	background: #ddd;
+	font-family:sans-serif;
+}
+
+header, footer {
+	position: absolute;
+	z-index:2000;	
+}
+
+header {
+	background: #fff;
+	width:300px;
+	right: 10px;
+	bottom:40px;
+	height:35px;
+	box-shadow:rgba(0,0,0,.4) 0px 0px 2px;
+}
+
+
+footer {
+	bottom:0;
+	left:0;
+	right:0;
+	background:#fff;
+	height:35px;
+	box-shadow:rgba(0,0,0,.4) 0px -1px 2px;
+}
