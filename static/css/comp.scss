@@ -7,9 +7,15 @@ body, html {
 	width:100%;
 }
 
+
+pre {
+	background:#ddd;
+	padding:10px;10px;}
+
 body {
 	font-family:sans-serif;
 	font-size:12px;
+	overflow:hidden;
 }
 
 .messages, #input {

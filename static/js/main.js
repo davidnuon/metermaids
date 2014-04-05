@@ -33,8 +33,7 @@ var mm = {
 			var msg = this.messages[i];
 			mw.append(
 				'<div class="message">\
-					<table><tr><td></td><td>$n&mdash;$m</td></tr></table>\
-				</div>'
+					<table><tr><td></td><td>$n&mdash;$m</td></tr></table>\ </div>'
 				.replace('$m', this.conv.makeHtml(msg.content) )
 				.replace('$n',msg.name)
 			)

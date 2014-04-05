@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -17,7 +14,7 @@
 		</div>
 	
 		<div id="input">
-			<textarea name="22" id="chat-message" cols="30" rows="10"></textarea>
+			<textarea name="22" id="chat-message" cols="30" rows="2"></textarea>
 		</div>
 
 <script src="{{ url_for('static', filename='js/jquery.js') }} "></script>
@@ -26,6 +23,10 @@
 <script src="{{ url_for('static', filename='js/codemirror.js') }} "></script>
 <script src="{{ url_for('static', filename='js/Markdown.Converter.js') }} "></script>
 <script src="{{ url_for('static', filename='js/mode/markdown/markdown.js') }} "></script>
+<script src="{{ url_for('static', filename='js/skulpt.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/skulpt-stdlib.js') }}"></script>
+
+
 <script src="{{ url_for('static', filename='js/main.js') }} "></script>
 </body>
 </html>
