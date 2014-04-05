@@ -27,9 +27,8 @@ class ChatNamespace(BaseNamespace):
 
 
 @app.route("/", methods=['GET'])
-def hello():
-    return "This is meter maids"
-
+def index():
+    return render_template('index.html')
 
 @app.route('/socket.io/<path:remaining>')
 def socketio(remaining):
