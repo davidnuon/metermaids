@@ -77,6 +77,9 @@ def socketio(remaining):
 @app.route('/room/<Room>')
 def chatroom_route(Room):
     name = request.cookies.get('username')
+    if name == None:
+        name = ''
+        
     chatroom_history = {name: message for message in Room}
     return render_template('room.html', chatroom = Room, user = name)
 
